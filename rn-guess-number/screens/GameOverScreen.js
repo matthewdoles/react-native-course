@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingTop: 20,
   },
   imageContainer: {
     width: Dimensions.get('window').width * 0.7,
@@ -59,11 +60,11 @@ const styles = StyleSheet.create({
   },
   resultContainer: {
     marginHorizontal: 30,
-    marginVertical: Dimensions.get('window').height / 60,
+    marginVertical: Dimensions.get('window').height / 30,
   },
   resultText: {
     textAlign: 'center',
-    fontSize: Dimensions.get('window').height > 400 ? 16 : 20,
+    fontSize: Dimensions.get('window').width < 400 ? 16 : 24,
   },
   highlight: {
     color: Colors.primary,
