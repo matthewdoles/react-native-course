@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ScrollView, Image, View, Text, StyleSheet } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import { useSelector } from 'react-redux';
 
 import HeaderButton from '../components/HeaderButton';
 import DefaultText from '../components/DefaultText';
-import { MEALS } from '../data/dummy-data';
 
 const ListItem = (props) => {
   return (
@@ -16,7 +16,8 @@ const ListItem = (props) => {
 
 const MealDetailScreen = (props) => {
   const mealId = props.navigation.getParam('mealId');
-  const selectedMeal = MEALS.find((meal) => meal.id === mealId);
+  const allMeals = useSelector((state) => state.meals.meals);
+  const selectedMeal = allMeals.find((meal) => meal.id === mealId);
 
   return (
     <ScrollView style={styles.detailsContainer}>
@@ -39,11 +40,8 @@ const MealDetailScreen = (props) => {
 };
 
 MealDetailScreen.navigationOptions = (navigationData) => {
-  const mealId = navigationData.navigation.getParam('mealId');
-  const selectedMeal = MEALS.find((meal) => meal.id === mealId);
-
   return {
-    headerTitle: selectedMeal.title,
+    headerTitle: navigationData.navigation.getParam('mealTitle'),
     headerRight: () => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item title='Favorite' iconName='ios-star' onPress={() => {}} />
@@ -73,11 +71,10 @@ const styles = StyleSheet.create({
   listItem: {
     marginVertical: 10,
     marginHorizontal: 20,
-    
   },
   listItemText: {
     fontSize: 18,
-  }
+  },
 });
 
 export default MealDetailScreen;
