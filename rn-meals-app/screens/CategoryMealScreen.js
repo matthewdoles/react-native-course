@@ -36,7 +36,7 @@ const CategoryMealScreen = (props) => {
       <FlatList
         data={displayedMeals}
         renderItem={renderMealItem}
-        style={{ width: '90%' }}
+        style={{ width: '100%' }}
       />
     </View>
   );

@@ -16,7 +16,8 @@ const MealItem = (props) => {
   }
 
   return (
-    <View style={styles.mealItem}>
+    <View style={styles.mealItemContainer}>
+      <View style={styles.mealItem}>
       <TouchableComponent onPress={props.onSelectMeal}>
         <View>
           <View style={{ ...styles.mealRow, ...styles.mealHeader }}>
@@ -38,14 +39,21 @@ const MealItem = (props) => {
           </View>
         </View>
       </TouchableComponent>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  mealItemContainer: {
+    width: '100%',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   mealItem: {
     height: 200,
-    width: '100%',
+    width: '90%',
     backgroundColor: '#f5f5f5',
     borderRadius: 10,
     overflow: 'hidden',
