@@ -38,6 +38,13 @@ const ProductsOverviewScreen = (props) => {
     loadProducts();
   }, [dispatch, loadProducts]);
 
+  useEffect(() => {
+    const willFocusSub = props.navigation.addListener('willFocus', loadProducts);
+    return () => {
+      willFocusSub.remove();
+    }
+  }, [loadProducts]);
+
   const selectItemHandler = (id, title) => {
     props.navigation.navigate('ProductDetail', {
       productId: id,
@@ -133,7 +140,7 @@ const styles = StyleSheet.create({
   },
   errorButton: {
     marginTop: 20,
-  }
+  },
 });
 
 export default ProductsOverviewScreen;
