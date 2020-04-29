@@ -1,4 +1,5 @@
 export const SIGNUP = 'SIGNUP';
+export const LOGIN = 'LOGIN';
 
 export const signup = (email, password) => {
   return async (dispatch) => {
@@ -18,11 +19,55 @@ export const signup = (email, password) => {
     );
 
     if (!response.ok) {
-      throw new Error('Error signing up.')
+      const errorResData = await response.json();
+      const errorId = errorResData.error.message;
+
+      let message;
+      if (errorId === 'EMAIL_EXISTS') {
+        message = 'A user is already signed-up with this email';
+      }
+      throw new Error(message);
     }
 
     const resData = await response.json();
     console.log(resData);
-    dispatch({ type: SIGNUP });
+    dispatch({ type: SIGNUP, token: resData.idToken, userId: resData.localId });
+  };
+};
+
+export const login = (email, password) => {
+  return async (dispatch) => {
+    const response = await fetch(
+      'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAK7gnGhAsWzmtQDCblhoCF797x-ERqiUc',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+          returnSecureToken: true,
+        }),
+      }
+    );
+
+    if (!response.ok) {
+      const errorResData = await response.json();
+      const errorId = errorResData.error.message;
+
+      let message;
+      if (errorId === 'EMAIL_NOT_FOUND') {
+        message = 'Email could not be found.';
+      }
+      if (errorId === 'INVALID_PASSWORD') {
+        message = 'Please check password.';
+      }
+      throw new Error(message);
+    }
+
+    const resData = await response.json();
+    console.log(resData);
+    dispatch({ type: LOGIN, token: resData.idToken, userId: resData.localId });
   };
 };
