@@ -6,9 +6,10 @@ export const SET_ORDERS = 'SET_ORDERS';
 export const addOrder = (cartItems, totalAmount) => {
   return async (dispatch, getState) => {
     const token = getState().auth.token;
+    const userId = getState().auth.userId;
     const createdDate = new Date().toISOString();
     const response = await fetch(
-      `https://rn-shop-app-ca7f8.firebaseio.com/orders/u1.json?auth=${token}`,
+      `https://rn-shop-app-ca7f8.firebaseio.com/orders/${userId}.json?auth=${token}`,
       {
         method: 'POST',
         headers: {
@@ -41,10 +42,11 @@ export const addOrder = (cartItems, totalAmount) => {
 };
 
 export const fetchOrders = () => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const userId = getState().auth.userId;
     try {
       const response = await fetch(
-        'https://rn-shop-app-ca7f8.firebaseio.com/orders/u1.json'
+        `https://rn-shop-app-ca7f8.firebaseio.com/orders/${userId}.json`
       );
 
       if (!response.ok) {

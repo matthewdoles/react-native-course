@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, FlatList, Platform, StyleSheet, ActivityIndicator } from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  Platform,
+  StyleSheet,
+  ActivityIndicator,
+} from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
@@ -18,17 +25,26 @@ const OrdersScreen = (props) => {
     dispatch(orderActions.fetchOrders()).then(() => setIsLoading(false));
   }, [dispatch]);
 
+  if (orders.length === 0) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text>No orders found.</Text>
+      </View>
+    );
+  }
+
   if (isLoading) {
     return (
       <View style={styles.centered}>
         <ActivityIndicator size='large' color={Colors.primary} />
       </View>
-    )
+    );
   }
 
   return (
     <FlatList
       data={orders}
+      keyExtractor={(item) => item.id}
       renderItem={(itemData) => (
         <OrderItem
           amount={itemData.item.totalAmount}
@@ -63,6 +79,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-})
+});
 
 export default OrdersScreen;
