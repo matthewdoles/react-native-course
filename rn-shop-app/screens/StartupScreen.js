@@ -9,7 +9,6 @@ import { useDispatch } from 'react-redux';
 
 import Colors from '../constants/Colors';
 import * as authAction from '../store/actions/auth';
-import auth from '../store/reducers/auth';
 
 const StartupScreen = (props) => {
   const dispatch = useDispatch();
@@ -28,8 +27,10 @@ const StartupScreen = (props) => {
         return;
       }
 
+      const expirationTime = expirationDate.getTime() - new Date().getTime();
+
       props.navigation.navigate('Shop');
-      dispatch(authAction.authenticate(userId, token));
+      dispatch(authAction.authenticate(userId, token, expirationTime));
     };
     tryLogin();
   }, []);
