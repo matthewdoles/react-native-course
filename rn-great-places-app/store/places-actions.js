@@ -3,7 +3,6 @@ import * as FileSystem from 'expo-file-system';
 export const ADD_PLACE = 'ADD_PLACE';
 export const SET_PLACES = 'SET_PLACES';
 import { insertPlace, fetchPlaces } from '../helpers/db';
-
 import ENV from '../env';
 
 export const addPlace = (title, image, location) => {
@@ -38,22 +37,20 @@ export const addPlace = (title, image, location) => {
         location.lat,
         location.lng
       );
-      console.log(dbResult);
+      dispatch({
+        type: ADD_PLACE,
+        placeData: {
+          id: dbResult.insertId,
+          title: title,
+          image: newPath,
+          address: address,
+          coords: { lat: location.lat, lng: location.lng },
+        },
+      });
     } catch (err) {
       console.log(err);
       throw err;
     }
-
-    dispatch({
-      type: ADD_PLACE,
-      placeData: {
-        id: dbResult.insertId,
-        title: title,
-        image: newPath,
-        address: address,
-        coords: { lat: location.lat, lng: location.lng },
-      },
-    });
   };
 };
 
