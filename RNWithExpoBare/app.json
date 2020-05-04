@@ -1,0 +1,17 @@
+{
+  "name": "RNWithExpoBare",
+  "displayName": "RNWithExpoBare",
+  "expo": {
+    "name": "RNWithExpoBare",
+    "slug": "RNWithExpoBare",
+    "version": "1.0.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
