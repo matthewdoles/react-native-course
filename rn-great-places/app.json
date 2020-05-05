@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "rn-great-places-app",
-    "slug": "rn-great-places-app",
+    "name": "rn-great-places",
+    "slug": "rn-great-places",
     "platforms": [
       "ios",
       "android",
