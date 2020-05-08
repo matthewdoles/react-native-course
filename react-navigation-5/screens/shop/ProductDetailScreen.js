@@ -5,17 +5,17 @@ import {
   Text,
   Image,
   Button,
-  StyleSheet
+  StyleSheet,
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Colors from '../../constants/Colors';
 import * as cartActions from '../../store/actions/cart';
 
-const ProductDetailScreen = props => {
-  const productId = props.navigation.getParam('productId');
-  const selectedProduct = useSelector(state =>
-    state.products.availableProducts.find(prod => prod.id === productId)
+const ProductDetailScreen = (props) => {
+  const productId = props.route.params.productId;
+  const selectedProduct = useSelector((state) =>
+    state.products.availableProducts.find((prod) => prod.id === productId)
   );
   const dispatch = useDispatch();
 
@@ -25,7 +25,7 @@ const ProductDetailScreen = props => {
       <View style={styles.actions}>
         <Button
           color={Colors.primary}
-          title="Add to Cart"
+          title='Add to Cart'
           onPress={() => {
             dispatch(cartActions.addToCart(selectedProduct));
           }}
@@ -37,34 +37,34 @@ const ProductDetailScreen = props => {
   );
 };
 
-export const screenOptions = navData => {
+export const screenOptions = (navData) => {
   return {
-    headerTitle: navData.navigation.getParam('productTitle')
+    headerTitle: navData.route.params.productTitle,
   };
 };
 
 const styles = StyleSheet.create({
   image: {
     width: '100%',
-    height: 300
+    height: 300,
   },
   actions: {
     marginVertical: 10,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   price: {
     fontSize: 20,
     color: '#888',
     textAlign: 'center',
     marginVertical: 20,
-    fontFamily: 'open-sans-bold'
+    fontFamily: 'open-sans-bold',
   },
   description: {
     fontFamily: 'open-sans',
     fontSize: 14,
     textAlign: 'center',
-    marginHorizontal: 20
-  }
+    marginHorizontal: 20,
+  },
 });
 
 export default ProductDetailScreen;
